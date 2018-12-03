@@ -8,4 +8,19 @@ services:
     #image: djangotest
     ports:
       - "8000:8000"
-    
+    links:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: djangotest
+      DB_USERNAME: djangotester
+      DB_PASSWORD: root
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 13306:3306
+    environment:
+      MYSQL_DATABASE: djangotest
+      MYSQL_USER: djangotester
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
