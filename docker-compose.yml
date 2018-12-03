@@ -1,0 +1,11 @@
+version: '3'
+services:
+  webserver:
+    build: .
+    # command: python manage.py runserver
+    volumes:
+      - .:/usr/src/app
+    #image: djangotest
+    ports:
+      - "8000:8000"
+    
