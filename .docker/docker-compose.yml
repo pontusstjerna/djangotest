@@ -1,26 +1,27 @@
 version: '3'
 services:
   webserver:
-    build: .
-    # command: python manage.py runserver
+    build: 
+      context: ..
+      dockerfile: .docker/Dockerfile
     volumes:
-      - .:/usr/src/app
-    #image: djangotest
+      - ..:/usr/src/app
+    image: djangotest
     ports:
-      - "8000:8000"
+      - "3000:3000"
     links:
-      - mysql
+      - db_djangotest
     environment:
-      DB_HOST: mysql
+      DB_HOST: db_djangotest
       DB_DATABASE: djangotest
-      DB_USERNAME: djangotester
+      DB_USERNAME: user
       DB_PASSWORD: root
-  mysql:
+  db_djangotest:
     image: mysql:5.7
     ports:
       - 13306:3306
     environment:
       MYSQL_DATABASE: djangotest
-      MYSQL_USER: djangotester
+      MYSQL_USER: user
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
