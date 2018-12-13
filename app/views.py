@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import loader
 
 from .models import Question
 
 # Create your views here.
 
 def index(request):
+    # template = loader.get_template('app/index.html')
+    #return HttpResponse(template.render({'latest_questions': latest_questions}, request))
+    
     latest_questions = Question.objects.order_by('-pub_date')[0:5]
-
-    response = '<h1>Djangotest</h1>'
-    response += '<ol>' + ''.join(list(map(lambda q : '<li>' + q.question_text + '</li>', latest_questions))) + '</ol>'
-
-    return HttpResponse("%s" % response)
+    return render(request, 'app/index.html', {'latest_questions': latest_questions})
 
 def detail(request, question_id):
 

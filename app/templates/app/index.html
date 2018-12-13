@@ -1,0 +1,21 @@
+<div>
+    <h1 class="header">Welcome to Djangotest änna</h1>
+    <h3>
+        Latest 
+        {% if latest_questions %}{{ latest_questions|length }} {% else %} 0 {% endif %}
+        questions
+    </h3>
+    {% if latest_questions %}
+        <ol>
+            {% for question in latest_questions %}
+                <li>
+                    <b>{{ question.pub_date }}</b>
+                    - 
+                    <a href="/{{ question.id }}">{{ question.question_text }}</a>
+                </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p>Sorry, no questions at the moment. :(</p>
+    {% endif %}
+</div>
