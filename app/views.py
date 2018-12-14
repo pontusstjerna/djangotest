@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404
 from django.template import loader
 
 from .models import Question
@@ -15,14 +15,14 @@ def index(request):
 
 def detail(request, question_id):
 
-    response = 'Question %s not found :(' % question_id
+    #try: 
+     #   response = "<h1>%s</h1>" % Question.objects.get(pk=question_id).question_text
+    #except:
+        #raise Http404("Question does not exist")
 
-    try: 
-        response = "<h1>%s</h1>" % Question.objects.get(pk=question_id).question_text
-    except:
-        print("Error")
+    question = get_object_or_404(Question, pk=question_id)
 
-    return HttpResponse(response)
+    return render(request, 'app/detail.html', {'question': question})
 
 def results(request, question_id):
     return HttpResponse("You are looking at the result of question %s." % question_id)
