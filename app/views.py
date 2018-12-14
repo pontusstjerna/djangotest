@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.views import generic
 
 from .models import Question, Choice
 
@@ -44,5 +45,16 @@ def vote(request, question_id):
 
     return HttpResponseRedirect(reverse('app:detail', args=(question.id,)))
 
+class IndexView(generic.ListView):
+    template_name = 'app/index.html'
 
-    
+    # To override default 'question_list'
+    context_object_name = 'latest_questions'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'app/detail.html'
