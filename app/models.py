@@ -17,6 +17,7 @@ class Choice(models.Model):
         return self.choice_text + ': ' + str(self.votes)
 
 
+
 """
 To update model: 
 

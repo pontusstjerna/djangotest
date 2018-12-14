@@ -1,6 +1,11 @@
 <h3>{{question.question_text}}</h3>
+{% if error_message %}
+    <p><b>{{ error_message }}</b></p>
+{% endif %}
+
 <ul>
     {% for choice in question.choice_set.all %}
-        <li><b>{{ choice.choice_text }}: </b>choice.votes</li>
+        <li><b>{{ choice.choice_text }}: </b>{{ choice.votes }}</li>
     {% endfor %}
 </ul>
+<h3><a href="{% url 'app:vote' question.id %}">Vote now!</a></h3>

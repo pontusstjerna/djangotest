@@ -1,0 +1,24 @@
+<h3>{{question.question_text}}</h3>
+{% if error_message %}
+    <p><b>{{ error_message }}</b></p>
+{% endif %}
+
+{% if question.choice_set.all|length > 0 %}
+    <form action="{% url 'app:vote' question.id%}" method="post">
+
+        <!-- This is for denying requests from other origin, kinda like CORS -->
+        {% csrf_token %}
+
+        <div>
+            {% for choice in question.choice_set.all %}
+                <p>
+                    <input type="radio" name="choice" id="choice-{{ forloop.counter }}" value="{{ choice.id }}" >
+                    <label for="choice-{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                </p>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Send vote!">
+    </form>
+{% else %}
+    <p>Oops! This question apparently has no choices... :(</p>
+{% endif %}
